@@ -1,0 +1,36 @@
+﻿@model MobilesBases.ViewModel.MobileInformationViewModel
+@{
+    ViewBag.Title = "Details";
+}
+
+<table class="table table-hovered table-border">
+    <tr>
+
+        <td>@Model.Mii.MF.ManufacturerName</td>
+        <td>დახასიათება</td>
+        <td>ვიდეო</td>
+    </tr>
+    <tr>
+        <td><img src="@Model.Mii.Imagepath" style="width:200px;height:200px;" /></td>
+        <td>
+            <p>დასახელება:@Model.Mii.MF.ManufacturerName</p>
+            <p>წონა:@Model.Mii.Weight კგ</p>
+            <p>ზომა:@Model.Mii.Size კგ</p>
+            <p>ეკრანის ზომა:@Model.Mii.ScreenSize კგ</p>
+            <p>პროცესორი:@Model.Mii.Processor</p>
+            <p>მეხსიერება:@Model.Mii.Memory</p>
+            <p>ოპერაციული სისტემა:@Model.Mii.OperationalSystem</p>
+            <button class="btn btn-succes">ფასი:@Model.Mii.Price $</button>
+        </td>
+        <td>
+            <video width="400" controls>
+                @*<source src="@Model.Mii.Videopath" type="video/mp4">*@
+                <source src="@Model.Mii.Videopath" type="video/ogg">
+            </video>
+         </td>
+    </tr>
+</table>
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

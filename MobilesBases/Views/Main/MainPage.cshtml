@@ -1,0 +1,64 @@
+﻿@model PagedList.IPagedList<MobilesBases.Models.MobileInformation>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "MainPage";
+}
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/Content/Css/MainPage.css" />
+</head>
+<body>
+    <title>eMobile</title>
+    <div class="wrapper">
+        <div class="CategoryDiv">
+            <h4>კატეგორია</h4>
+            @using (Html.BeginForm("MainPage", "Main", FormMethod.Get, new { @style = "width:100%;" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBox("SearchText", null, new { @class = "form-control", @placeholder = "დასახელება" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                    </div>
+                </div>
+                <div style="width:100%;">
+                    <div class="form-group" style="float:left; width:140px;">
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="From" placeholder="ფასი დან" id="From" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="float:left;width:140px;">
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="To" placeholder="ფასი მდე" id="To" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownList("Departments",(IEnumerable<SelectListItem>)ViewBag.Departments,"მწარმოებელი", new { @class = "form-control",})
+                    </div>
+                    <input type="submit" value="ძიება" class="searchBtn" />
+                </div>
+            }
+        </div>
+        <div class="MobilesDiv">
+            @foreach (var item in Model.Where(x => x.MobileManufacturerId == x.MF.Id))
+            {
+                <div>
+                    <img src="@item.Imagepath" style="width:70px; height    :100px;" />
+                    @Html.ActionLink(item.MF.ManufacturerName, "Details", "Main", new { id = item.Id, @style = "display:block;" }, null)
+                    <p style="background-color:grey; color:white;">@item.Price$</p>
+                </div>
+
+            }
+        </div>
+        @Html.PagedListPager(Model, page => Url.Action("MainPage", new { page, SearchText =Request.QueryString["SearchText"], From =Request.QueryString["From"],To=Request.QueryString["To"],Departments=Request.QueryString["Departments"]}))
+    </div>
+</body>
+</html>
+

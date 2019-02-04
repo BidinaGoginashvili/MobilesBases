@@ -1,0 +1,36 @@
+﻿@model IEnumerable<MobilesBases.Models.ManufacturerInformation>
+@{
+    ViewBag.Title = "SearchEngine";
+}
+
+<h2>SearchEngine</h2>
+@using (Html.BeginForm("SearchEngine", "Main", FormMethod.Get))
+{
+    @Html.TextBox("searchText")<input type="submit" value="Search"/>
+}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>მწარმოებელი</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            <td colspan="3" style="color:red;">No matches</td>
+        </tr>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.</td>
+                <td>@item.ManufacturerName</td>
+            </tr>   
+        }
+    }
+    </tbody>
+</table>
